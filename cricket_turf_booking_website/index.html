@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Book cricket turf slots online. Choose your date and 30-minute time slot.">
+  <title>Boundary Box Cricket Turf | Online Booking</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="#home">
+        <span class="brand-icon">🏏</span>
+        <span>Boundary Box</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+
+      <nav id="mainNav">
+        <a href="#home">Home</a>
+        <a href="#turf">Turf</a>
+        <a href="#booking">Book Slot</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="#booking" class="nav-button">Book Now</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <span class="eyebrow">YOUR GAME. YOUR SLOT. YOUR TURF.</span>
+        <h1>Play Cricket.<br><span>Own the Boundary.</span></h1>
+        <p>Book your cricket turf in 30-minute slots. Pick a date, choose your time and get ready to play.</p>
+        <div class="hero-actions">
+          <a href="#booking" class="primary-button">Book Your Slot</a>
+          <a href="#turf" class="secondary-button">View Turf Details</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="turf" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <span class="section-label">THE TURF</span>
+          <h2>Everything you need for a great game.</h2>
+          <p>Premium cricket turf with flexible slots for friends, teams and practice sessions.</p>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <div class="info-icon">📍</div>
+            <h3>Location</h3>
+            <p>Boundary Box Cricket Turf</p>
+            <p>Anna Nagar, Chennai, Tamil Nadu</p>
+            <a href="https://maps.google.com/?q=Anna+Nagar+Chennai" target="_blank" rel="noopener">Open in Google Maps →</a>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">⏱️</div>
+            <h3>Flexible Slots</h3>
+            <p>Book from 30 minutes onwards.</p>
+            <p>Morning, evening and weekend slots available.</p>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">🏟️</div>
+            <h3>Turf Facilities</h3>
+            <p>Cricket practice turf</p>
+            <p>Floodlights · Parking · Drinking water</p>
+          </article>
+
+          <article class="info-card">
+            <div class="info-icon">📞</div>
+            <h3>Contact</h3>
+            <p>+91 98765 43210</p>
+            <p>boundarybox@example.com</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" class="section booking-section">
+      <div class="container">
+        <div class="section-heading center">
+          <span class="section-label">ONLINE BOOKING</span>
+          <h2>Choose your date & time</h2>
+          <p>Bookings are currently shown for the next 14 days.</p>
+        </div>
+
+        <div class="booking-layout">
+          <div class="calendar-panel">
+            <div class="panel-title">
+              <div>
+                <span class="small-label">SELECT DATE</span>
+                <h3 id="monthTitle">Loading...</h3>
+              </div>
+              <span class="calendar-note">Next 14 days</span>
+            </div>
+            <div id="dateGrid" class="date-grid"></div>
+          </div>
+
+          <div class="slots-panel">
+            <div class="panel-title">
+              <div>
+                <span class="small-label">AVAILABLE SLOTS</span>
+                <h3 id="selectedDateLabel">Select a date</h3>
+              </div>
+              <span class="duration-badge">30 MIN</span>
+            </div>
+
+            <div id="slotGrid" class="slot-grid"></div>
+            <div class="legend">
+              <span><i class="dot available"></i> Available</span>
+              <span><i class="dot selected"></i> Selected</span>
+              <span><i class="dot booked"></i> Booked</span>
+            </div>
+
+            <form id="bookingForm" class="booking-form">
+              <div class="form-row">
+                <div class="field">
+                  <label for="customerName">Name</label>
+                  <input id="customerName" type="text" placeholder="Your name" required>
+                </div>
+                <div class="field">
+                  <label for="customerPhone">Phone</label>
+                  <input id="customerPhone" type="tel" placeholder="+91 XXXXX XXXXX" required>
+                </div>
+              </div>
+
+              <div class="booking-summary" id="bookingSummary">
+                Select a date and slot to continue.
+              </div>
+
+              <button type="submit" class="primary-button full-width" id="confirmButton" disabled>
+                Confirm Booking
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="demo-note">
+          <strong>Demo mode:</strong> bookings are stored only in this browser using localStorage.
+          When you move this to AWS, connect this form to an API and database for real bookings.
+        </div>
+      </div>
+    </section>
+
+    <section class="section features-section">
+      <div class="container">
+        <div class="feature-row">
+          <div>
+            <span class="section-label">SIMPLE BOOKING</span>
+            <h2>Book in three steps.</h2>
+          </div>
+          <div class="steps">
+            <div class="step"><b>01</b><span>Choose a date</span></div>
+            <div class="step"><b>02</b><span>Select a 30-min slot</span></div>
+            <div class="step"><b>03</b><span>Confirm your booking</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section contact-section">
+      <div class="container contact-card">
+        <div>
+          <span class="section-label">GET IN TOUCH</span>
+          <h2>Ready to play?</h2>
+          <p>Call us or message us for team bookings, recurring slots and venue enquiries.</p>
+        </div>
+        <div class="contact-actions">
+          <a href="tel:+919876543210" class="contact-link">📞 +91 98765 43210</a>
+          <a href="mailto:boundarybox@example.com" class="contact-link">✉️ boundarybox@example.com</a>
+          <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="whatsapp-button">WhatsApp Us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Boundary Box Cricket Turf. All rights reserved.</p>
+      <p>Built for easy online turf booking.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

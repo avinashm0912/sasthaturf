@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>22 Yards Turf — Book Your Slot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pitch:#173B2C;
+    --grass:#3E8E5A;
+    --grass-light:#DCEEDF;
+    --chalk:#FAF9F4;
+    --ink:#132018;
+    --ink-soft:#4C5A51;
+    --floodlight:#E8A33D;
+    --line:rgba(19,32,24,0.12);
+    --radius:4px;
+    box-sizing:border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-padding-top: calc(72px + env(safe-area-inset-top,0px)); scroll-behavior:smooth;}
+  html,body{height:100%;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--chalk);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.score{font-family:'Oswald',sans-serif; letter-spacing:0.01em;}
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:var(--pitch);
+    padding-top: env(safe-area-inset-top, 0px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .navbar{
+    max-width:1120px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .brand{display:flex;align-items:center;gap:10px;color:var(--chalk);text-decoration:none;}
+  .brand-mark{width:30px;height:30px;flex:none;}
+  .brand-name{font-family:'Oswald',sans-serif;font-size:1.15rem;font-weight:600;color:var(--chalk);}
+  .navlinks{display:flex;gap:28px;list-style:none;}
+  .navlinks a{color:rgba(250,249,244,0.8);text-decoration:none;font-size:0.92rem;font-weight:500;transition:color .15s;}
+  .navlinks a:hover,.navlinks a:focus-visible{color:var(--floodlight);}
+  .nav-cta{
+    background:var(--floodlight);color:var(--pitch);padding:9px 18px;border-radius:var(--radius);
+    text-decoration:none;font-weight:600;font-size:0.9rem;white-space:nowrap;
+  }
+  .nav-toggle{display:none;background:none;border:none;color:var(--chalk);font-size:1.6rem;cursor:pointer;padding:4px;}
+
+  /* HERO */
+  .hero{
+    background:var(--pitch); color:var(--chalk); position:relative; overflow:hidden;
+    padding:64px 0 88px;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 64px);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:center;position:relative;}
+  .kicker{color:var(--floodlight);font-weight:600;font-size:0.85rem;}
+  .hero h1{font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.05;margin:14px 0 18px;font-weight:600;}
+  .hero p.lede{color:rgba(250,249,244,0.78);font-size:1.05rem;max-width:46ch;margin-bottom:30px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:13px 26px;border-radius:var(--radius);font-weight:600;
+    text-decoration:none;font-size:0.95rem;border:1px solid transparent;cursor:pointer;
+    transition:transform .12s ease, background .15s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--floodlight);color:var(--pitch);}
+  .btn-ghost{background:transparent;color:var(--chalk);border-color:rgba(250,249,244,0.35);}
+  .hero-stats{display:flex;gap:32px;margin-top:44px;}
+  .hero-stats div strong{display:block;font-family:'Oswald',sans-serif;font-size:1.7rem;color:var(--floodlight);}
+  .hero-stats div span{font-size:0.82rem;color:rgba(250,249,244,0.65);}
+  .pitch-art{width:100%;height:auto;}
+
+  section{padding:72px 0;}
+  .section-head{max-width:60ch;margin-bottom:36px;}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.2rem);font-weight:600;margin-bottom:10px;}
+  .section-head p{color:var(--ink-soft);}
+
+  /* BOOKING */
+  #book{background:var(--grass-light);}
+  .date-strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:14px;margin-bottom:26px;scrollbar-width:thin;}
+  .date-chip{
+    flex:none;min-width:66px;text-align:center;background:var(--chalk);border:1px solid var(--line);
+    border-radius:var(--radius);padding:10px 6px;cursor:pointer;font-size:0.8rem;color:var(--ink-soft);
+    transition:background .12s, border-color .12s, color .12s;
+  }
+  .date-chip .dow{display:block;font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:.04em;}
+  .date-chip .dnum{display:block;font-family:'Oswald',sans-serif;font-size:1.3rem;color:var(--ink);margin:2px 0;}
+  .date-chip.active{background:var(--pitch);border-color:var(--pitch);}
+  .date-chip.active .dnum,.date-chip.active .dow{color:var(--chalk);}
+  .date-chip:hover:not(.active){border-color:var(--grass);}
+
+  .slots-head{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .slots-head h3{font-size:1.1rem;font-weight:600;}
+  .legend{display:flex;gap:16px;font-size:0.8rem;color:var(--ink-soft);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .dot{width:10px;height:10px;border-radius:2px;display:inline-block;}
+  .dot.free{background:var(--chalk);border:1px solid var(--grass);}
+  .dot.booked{background:#C9C2B4;}
+  .dot.mine{background:var(--grass);}
+
+  .slots-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:10px;
+  }
+  .slot{
+    background:var(--chalk);border:1px solid var(--grass);border-radius:var(--radius);
+    padding:10px 8px;text-align:center;font-size:0.85rem;font-weight:500;cursor:pointer;
+    transition:background .12s, color .12s;
+  }
+  .slot:hover{background:var(--grass);color:var(--chalk);}
+  .slot.booked{
+    background:#EDEAE0;border-color:var(--line);color:#A7A093;cursor:not-allowed;text-decoration:line-through;
+  }
+  .slot.booked:hover{background:#EDEAE0;color:#A7A093;}
+  .slot.mine{background:var(--grass);color:var(--chalk);}
+
+  /* LOCATION */
+  .loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .map-box{
+    background:var(--pitch);border-radius:var(--radius);aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;color:rgba(250,249,244,0.5);
+    font-size:0.85rem;position:relative;overflow:hidden;
+  }
+  .loc-details dt{font-weight:600;font-size:0.8rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.03em;margin-top:20px;}
+  .loc-details dt:first-child{margin-top:0;}
+  .loc-details dd{font-size:1.02rem;margin-top:4px;}
+  .loc-details a{color:var(--pitch);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+
+  /* CONTACT / FOOTER */
+  footer{background:var(--pitch);color:rgba(250,249,244,0.85);padding:56px 0 32px;}
+  .foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+  footer h4{font-family:'Oswald',sans-serif;font-size:1rem;margin-bottom:14px;color:var(--chalk);}
+  footer ul{list-style:none;}
+  footer li{margin-bottom:9px;font-size:0.92rem;}
+  footer a{text-decoration:none;color:rgba(250,249,244,0.75);}
+  footer a:hover{color:var(--floodlight);}
+  .foot-bottom{border-top:1px solid rgba(250,249,244,0.12);padding-top:20px;font-size:0.8rem;color:rgba(250,249,244,0.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* MODAL */
+  .overlay{
+    position:fixed;inset:0;background:rgba(19,32,24,0.55);display:none;align-items:center;justify-content:center;
+    z-index:100;padding:20px;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:var(--chalk);border-radius:var(--radius);max-width:380px;width:100%;padding:28px;
+  }
+  .modal h3{margin-bottom:6px;}
+  .modal p.sub{color:var(--ink-soft);font-size:0.9rem;margin-bottom:18px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:6px;}
+  .field input{
+    width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:var(--radius);
+    font-family:inherit;font-size:0.95rem;background:#fff;
+  }
+  .field input:focus-visible{outline:2px solid var(--grass);outline-offset:1px;}
+  .modal-actions{display:flex;gap:10px;margin-top:20px;}
+  .modal-actions .btn{flex:1;text-align:center;}
+  .btn-secondary{background:var(--grass-light);color:var(--ink);}
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--pitch);color:var(--chalk);padding:14px 22px;border-radius:var(--radius);
+    font-size:0.9rem;font-weight:500;opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;z-index:200;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr;}
+    .pitch-art{max-width:280px;margin:0 auto;}
+    .loc-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:640px){
+    .navlinks{
+      position:fixed;top:calc(60px + env(safe-area-inset-top,0px));left:0;right:0;background:var(--pitch);
+      flex-direction:column;gap:0;padding:8px 24px 18px;display:none;border-bottom:1px solid rgba(255,255,255,0.08);
+    }
+    .navlinks.open{display:flex;}
+    .navlinks a{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-toggle{display:block;}
+    .nav-cta{display:none;}
+    .hero-stats{gap:22px;flex-wrap:wrap;}
+    .foot-grid{grid-template-columns:1fr;gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navbar">
+    <a href="#top" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="16" cy="16" r="15" stroke="#E8A33D" stroke-width="2"/>
+        <path d="M8 22 L22 8" stroke="#E8A33D" stroke-width="2"/>
+        <circle cx="8" cy="22" r="2.4" fill="#FAF9F4"/>
+      </svg>
+      <span class="brand-name">22 Yards Turf</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <ul class="navlinks" id="navLinks">
+      <li><a href="#book">Book a slot</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#book" class="nav-cta">Book now</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker">CHENNAI'S NEIGHBOURHOOD TURF</div>
+      <h1>Book the pitch.<br>Play by the hour — or the half.</h1>
+      <p class="lede">A full-size cricket turf with floodlights, bowling machine and matting wickets. Slots open in 30-minute blocks, two weeks out, every day.</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn btn-primary">Check today's slots</a>
+        <a href="#location" class="btn btn-ghost">Get directions</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>30 min</strong><span>smallest slot</span></div>
+        <div><strong>14 days</strong><span>booking window</span></div>
+        <div><strong>6 AM–12 AM</strong><span>open daily</span></div>
+      </div>
+    </div>
+    <div>
+      <svg class="pitch-art" viewBox="0 0 320 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="160" cy="330" rx="140" ry="28" fill="#0F2C21"/>
+        <rect x="140" y="40" width="40" height="300" rx="4" fill="#3E8E5A"/>
+        <rect x="150" y="40" width="20" height="300" fill="#DCEEDF" opacity="0.5"/>
+        <rect x="60" y="20" width="6" height="140" fill="#E8A33D"/>
+        <circle cx="63" cy="16" r="9" fill="#E8A33D"/>
+        <rect x="254" y="20" width="6" height="140" fill="#E8A33D"/>
+        <circle cx="257" cy="16" r="9" fill="#E8A33D"/>
+        <g transform="translate(148,300)">
+          <rect x="0" y="0" width="3" height="26" fill="#FAF9F4"/>
+          <rect x="9" y="0" width="3" height="26" fill="#FAF9F4"/>
+          <rect x="18" y="0" width="3" height="26" fill="#FAF9F4"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="book">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Slot booking</h2>
+      <p>Pick a date, then a 30-minute slot. Availability shown below is a live demo — once this site connects to a booking database, it'll reflect real bookings.</p>
+    </div>
+
+    <div class="date-strip" id="dateStrip"></div>
+
+    <div class="slots-head">
+      <h3 id="slotsDateLabel">Slots</h3>
+      <div class="legend">
+        <span><i class="dot free"></i>Open</span>
+        <span><i class="dot mine"></i>Your booking</span>
+        <span><i class="dot booked"></i>Booked</span>
+      </div>
+    </div>
+    <div class="slots-grid" id="slotsGrid"></div>
+  </div>
+</section>
+
+<section id="location">
+  <div class="wrap loc-grid">
+    <div class="map-box">
+      <span>Map preview — embed Google Maps here at deployment</span>
+    </div>
+    <div>
+      <div class="section-head" style="margin-bottom:0;">
+        <h2>Find the turf</h2>
+        <p>Plenty of two-wheeler and car parking on site.</p>
+      </div>
+      <dl class="loc-details">
+        <dt>Address</dt>
+        <dd>22 Yards Turf, Rajiv Gandhi Salai (OMR), Sholinganallur, Chennai, Tamil Nadu 600119</dd>
+        <dt>Landmark</dt>
+        <dd>Behind Sathyabama Multi-Speciality Hospital</dd>
+        <dt>Directions</dt>
+        <dd><a href="#" id="directionsLink">Open in Google Maps</a></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>22 Yards Turf</h4>
+        <p style="max-width:34ch;color:rgba(250,249,244,0.7);font-size:0.92rem;">A full-size cricket turf on OMR, open every day from 6 AM to midnight. Bring your own kit, or hire ours at the counter.</p>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+          <li><a href="https://wa.me/919876543210">WhatsApp us</a></li>
+          <li><a href="mailto:play@22yardsturf.in">play@22yardsturf.in</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <ul>
+          <li>Mon–Sun: 6:00 AM – 12:00 AM</li>
+          <li>Last slot starts 11:30 PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>&copy; <span id="year"></span> 22 Yards Turf</span>
+      <span>Built as a landing page — booking data is stored on this device only, for now.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <h3 id="modalSlotTime">Confirm slot</h3>
+    <p class="sub" id="modalDateLabel"></p>
+    <div class="field">
+      <label for="bookName">Your name</label>
+      <input type="text" id="bookName" placeholder="e.g. Arjun Kumar">
+    </div>
+    <div class="field">
+      <label for="bookPhone">Phone number</label>
+      <input type="tel" id="bookPhone" placeholder="10-digit mobile number">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="cancelBook">Cancel</button>
+      <button class="btn btn-primary" id="confirmBook">Confirm booking</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Mobile nav toggle
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// ---- Date setup: next 14 days, English (Gregorian) calendar ----
+const DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function toKey(d){ return d.toISOString().slice(0,10); } // YYYY-MM-DD in local calc below
+function dateKey(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+const today = new Date();
+today.setHours(0,0,0,0);
+const dates = Array.from({length:14}, (_,i) => {
+  const d = new Date(today);
+  d.setDate(d.getDate()+i);
+  return d;
+});
+
+const dateStrip = document.getElementById('dateStrip');
+let selectedKey = dateKey(dates[0]);
+
+dates.forEach((d,i) => {
+  const chip = document.createElement('div');
+  chip.className = 'date-chip' + (i===0 ? ' active' : '');
+  chip.dataset.key = dateKey(d);
+  chip.innerHTML = `<span class="dow">${DOW[d.getDay()]}</span><span class="dnum">${d.getDate()}</span><span class="dow">${d.toLocaleString('en-US',{month:'short'})}</span>`;
+  chip.addEventListener('click', () => selectDate(d, chip));
+  dateStrip.appendChild(chip);
+});
+
+// ---- Slots: 30-min increments, 06:00 to 23:30 ----
+function buildSlotTimes(){
+  const slots = [];
+  for(let mins = 6*60; mins <= 23*60+30; mins += 30){
+    const h24 = Math.floor(mins/60), m = mins%60;
+    const ampm = h24 < 12 ? 'AM' : 'PM';
+    let h12 = h24 % 12; if(h12===0) h12 = 12;
+    slots.push(`${h12}:${String(m).padStart(2,'0')} ${ampm}`);
+  }
+  return slots;
+}
+const SLOT_TIMES = buildSlotTimes();
+
+// Deterministic pseudo-random "already booked by others" demo data, seeded per date+slot
+function seededRandom(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) >>> 0; }
+  return (h % 100) / 100;
+}
+
+function getMyBookings(){
+  try{ return JSON.parse(localStorage.getItem('turfBookings') || '{}'); }
+  catch(e){ return {}; }
+}
+function saveMyBookings(obj){
+  try{ localStorage.setItem('turfBookings', JSON.stringify(obj)); }
+  catch(e){ /* storage unavailable */ }
+}
+
+const slotsGrid = document.getElementById('slotsGrid');
+const slotsDateLabel = document.getElementById('slotsDateLabel');
+
+function renderSlots(dateObj){
+  const key = dateKey(dateObj);
+  selectedKey = key;
+  slotsDateLabel.textContent = `Slots for ${DOW[dateObj.getDay()]}, ${dateObj.getDate()} ${dateObj.toLocaleString('en-US',{month:'long'})}`;
+  slotsGrid.innerHTML = '';
+  const mine = getMyBookings();
+
+  SLOT_TIMES.forEach(time => {
+    const slotKey = `${key}_${time}`;
+    const demoBooked = seededRandom(slotKey) < 0.28;
+    const isMine = !!mine[slotKey];
+    const btn = document.createElement('div');
+    btn.className = 'slot' + (isMine ? ' mine' : (demoBooked ? ' booked' : ''));
+    btn.textContent = time;
+    btn.setAttribute('role','button');
+    btn.setAttribute('tabindex', (demoBooked && !isMine) ? '-1' : '0');
+    if(!demoBooked || isMine){
+      btn.addEventListener('click', () => openModal(dateObj, time, slotKey, isMine));
+      btn.addEventListener('keypress', e => { if(e.key==='Enter') openModal(dateObj, time, slotKey, isMine); });
+    }
+    slotsGrid.appendChild(btn);
+  });
+}
+
+function selectDate(d, chip){
+  document.querySelectorAll('.date-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  renderSlots(d);
+}
+
+renderSlots(dates[0]);
+
+// ---- Booking modal ----
+const overlay = document.getElementById('overlay');
+const modalSlotTime = document.getElementById('modalSlotTime');
+const modalDateLabel = document.getElementById('modalDateLabel');
+const bookName = document.getElementById('bookName');
+const bookPhone = document.getElementById('bookPhone');
+let activeSlotKey = null, activeDateObj = null, activeIsMine = false;
+
+function openModal(dateObj, time, slotKey, isMine){
+  activeSlotKey = slotKey; activeDateObj = dateObj; activeIsMine = isMine;
+  modalSlotTime.textContent = isMine ? `Cancel booking — ${time}` : `Confirm slot — ${time}`;
+  modalDateLabel.textContent = `${DOW[dateObj.getDay()]}, ${dateObj.getDate()} ${dateObj.toLocaleString('en-US',{month:'long'})}`;
+  const mine = getMyBookings();
+  bookName.value = isMine ? (mine[slotKey]?.name || '') : '';
+  bookPhone.value = isMine ? (mine[slotKey]?.phone || '') : '';
+  document.getElementById('confirmBook').textContent = isMine ? 'Cancel booking' : 'Confirm booking';
+  overlay.classList.add('open');
+  bookName.focus();
+}
+function closeModal(){
+  overlay.classList.remove('open');
+  activeSlotKey = null; activeDateObj = null;
+}
+document.getElementById('cancelBook').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+document.getElementById('confirmBook').addEventListener('click', () => {
+  const mine = getMyBookings();
+  if(activeIsMine){
+    delete mine[activeSlotKey];
+    saveMyBookings(mine);
+    showToast('Booking cancelled.');
+  } else {
+    if(!bookName.value.trim() || bookPhone.value.trim().length < 10){
+      showToast('Please enter your name and a valid phone number.');
+      return;
+    }
+    mine[activeSlotKey] = { name: bookName.value.trim(), phone: bookPhone.value.trim() };
+    saveMyBookings(mine);
+    showToast('Slot booked! See you on the pitch.');
+  }
+  closeModal();
+  renderSlots(activeDateObj || new Date(selectedKey));
+});
+
+// Directions link -> Google Maps search for the address
+document.getElementById('directionsLink').href =
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent('22 Yards Turf, Rajiv Gandhi Salai OMR, Sholinganallur, Chennai, Tamil Nadu 600119');
+</script>
+</body>
+</html>
